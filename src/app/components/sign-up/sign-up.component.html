@@ -1,0 +1,48 @@
+<section id="signUpSection">
+    <form class="w-50" [formGroup]="signUpForm" (ngSubmit)="signUpForm.valid&&SubmitSignUpFormData()">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-6 py-2">
+                    <input [class.is-valid]="signUpForm.controls.first_name.status=='VALID'" formControlName="first_name" type="text" class="form-control" placeholder="Enter First Name">
+                    <div *ngIf="signUpForm.controls.first_name.errors&&signUpForm.controls.first_name.touched" class="alert alert-danger" role="alert">
+                        First Name is required
+                    </div>
+                </div>
+                
+                <div class="col-6 py-2">
+                    <input [class.is-valid]="signUpForm.controls.last_name.status=='VALID'" formControlName="last_name" type="text" class="form-control" placeholder="Enter your Last Name">
+                    <div *ngIf="signUpForm.controls.last_name.errors&&signUpForm.controls.last_name.touched" class="alert alert-danger" role="alert">
+                        Last Name is required
+                    </div>
+                </div>
+
+                <div class="col-12 py-2">
+                    <input [class.is-valid]="signUpForm.controls.email.status=='VALID'" formControlName="email" type="email" class="form-control" placeholder="Enter your Email">
+                    <div *ngIf="signUpForm.controls.email.errors&&signUpForm.controls.email.touched" class="alert alert-danger" role="alert">
+                        Email value is invalid
+                    </div>
+                </div>
+
+                <div class="col-12 py-2">
+                    <input [class.is-valid]="signUpForm.controls.age.status=='VALID'" formControlName="age" type="number" class="form-control" placeholder="Enter your Age">
+                    <div *ngIf="signUpForm.controls.age.errors&&signUpForm.controls.age.touched" class="alert alert-danger" role="alert">
+                        age value is invalid
+                    </div>
+                </div>
+
+                <div class="col-12 py-2">
+                    <input [class.is-valid]="signUpForm.controls.password.status=='VALID'" formControlName="password" type="password" class="form-control" placeholder="Enter your Password">
+                    <div *ngIf="signUpForm.controls.password.errors&&signUpForm.controls.password.touched" class="alert alert-danger" role="alert">
+                        password value is invalid
+                    </div>
+                </div>
+                
+                <div class="col-12 py-2">
+                    <button [disabled]="signUpForm.invalid" [ngStyle]="signUpForm.invalid? isStyleValid:isStyleInvalid" class="btn btn-info w-100" type="submit"><span *ngIf="!isClicked">Submit</span><span *ngIf="isClicked">Waiting ...</span></button>
+                    <div class="alert text-center" *ngIf="signUpResultMessage!=''" [class.alert-danger]="signUpResultMessage!='success'" [class.alert-success]="signUpResultMessage=='success'" role="alert">{{signUpResultMessage}}</div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

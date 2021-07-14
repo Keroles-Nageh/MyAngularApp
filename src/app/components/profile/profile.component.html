@@ -1,0 +1,126 @@
+<section id="ProfileSection" class="pt-4">
+    <div class="container pt-5">
+
+        <div class="row">
+            <div class="col-12">
+                <button class="offset-10 btn btn-info" data-bs-toggle="modal" data-bs-target="#AddNote">Add Note</button>
+            </div>
+
+            <div class="col-12 my-3">
+              <input type="text" class="form-control w-75 m-auto" placeholder="Enter Note's Title" [(ngModel)]="searchTerm">
+            </div>
+
+            <div *ngIf="isLoading" class="col-12 text-center">
+              <i class="fas fa-yin-yang fa-spin fa-7x"></i>
+            </div>
+            
+        <!--<div *ngFor="let note of allUserNotes" class="col-3 my-4">-->
+            <div *ngFor="let note of allUserNotes|search:searchTerm" class="col-3 my-4">
+                <div class="NoteDetails text-center p-3">
+                    <div class="d-flex justify-content-end">
+                        <div class="dropdown">
+                            <i class="fas fa-ellipsis-v" id="ExistingNotesOptions" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                            <ul class="dropdown-menu" aria-labelledby="ExistingNotesOptions">
+                              <li><a class="dropdown-item" href="#" (click)="saveNoteID(note._id);setEditNotesFormValue()" data-bs-toggle="modal" data-bs-target="#EditNote">Edit Note<span><i class="far fa-edit float-end"></i></span></a></li>
+                              <li><a class="dropdown-item" href="#" (click)="saveNoteID(note._id)" data-bs-toggle="modal" data-bs-target="#DeleteNote">Delete<span><i class="fas fa-trash-alt float-end"></i></span></a></li>
+                            </ul>
+                          </div>
+                    </div>
+                    <h2>{{note.title|uppercase}}</h2>
+                    <p>{{note.desc|seemore:100}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-----------------------------------Start Add Note--------------------------------------------->
+
+  <div class="modal fade" id="AddNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form [formGroup]="AddNotesForm" (ngSubmit)="AddUserNote()">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Note</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-12">
+                          <input formControlName="AddNotesFormTitle" class="form-control my-4" type="text" placeholder="Enter your note title">
+                      </div>
+                      <div class="col-12">
+                        <textarea formControlName="AddNotesFormDesc" class="form-control" cols="30" rows="10" placeholder="Enter your note details"></textarea>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Add</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+<!-----------------------------------End Add Note----------------------------------------------->
+
+
+<!-----------------------------------Start Edit Note--------------------------------------------->
+
+<div class="modal fade" id="EditNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form [formGroup]="EditNotesForm" (ngSubmit)="EditUserNote()">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Note</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-12">
+                          <input formControlName="EditNotesFormTitle" class="form-control my-4" type="text" placeholder="Enter your note title">
+                      </div>
+                      <div class="col-12">
+                        <textarea formControlName="EditNotesFormDesc" class="form-control" cols="30" rows="10" placeholder="Enter your note details"></textarea>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<!-----------------------------------End Edit Note----------------------------------------------->
+
+
+<!-----------------------------------Start Delete Note--------------------------------------------->
+
+<div class="modal fade" id="DeleteNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Note</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+            <p>Are you sure you want to delete the selected note</p>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" (click)="deleteUserNote()" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-----------------------------------End Delete Note----------------------------------------------->

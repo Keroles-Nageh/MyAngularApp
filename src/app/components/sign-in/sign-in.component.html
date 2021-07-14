@@ -1,0 +1,26 @@
+<section id="signInSection">
+    <form class="w-50" [formGroup]="SignInForm" (ngSubmit)="SignInForm.valid&&SignInFormData()">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 py-2">
+                    <input [class.is-valid]="SignInForm.controls.email.status=='VALID'" formControlName="email" type="email" class="form-control" placeholder="Enter your Email">
+                    <div *ngIf="SignInForm.controls.email.errors&&SignInForm.controls.email.touched" class="alert alert-danger" role="alert">
+                        Email value is invalid
+                    </div>
+                </div>
+
+                <div class="col-12 py-2">
+                    <input [class.is-valid]="SignInForm.controls.password.status=='VALID'" formControlName="password" type="password" class="form-control" placeholder="Enter your Password">
+                    <div *ngIf="SignInForm.controls.password.errors&&SignInForm.controls.password.touched" class="alert alert-danger" role="alert">
+                        password value is invalid
+                    </div>
+                </div>
+                
+                <div class="col-12 py-2">
+                    <button [disabled]="!SignInForm.valid" class="btn btn-info w-100" type="submit"><span *ngIf="!isClicked">Submit</span><span *ngIf="isClicked">Waiting...</span></button>
+                    <div class="alert" [class.alert-danger]="ErrorMessage !=''" role="alert">{{ErrorMessage}}</div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
